@@ -7,7 +7,13 @@
 		{
 			"Name": "SJGame",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"GameFeatures",
+				"ModularGameplay",
+				"ModularGameplayActors"
+			]
 		}
 	],
 	"Plugins": [
@@ -24,6 +30,10 @@
 		},
 		{
 			"Name": "ModularGameplay",
+			"Enabled": true
+		},
+		{
+			"Name": "GameFeatures",
 			"Enabled": true
 		}
 	]
