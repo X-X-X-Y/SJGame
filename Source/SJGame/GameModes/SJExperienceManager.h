@@ -13,5 +13,18 @@ UCLASS()
 class SJGAME_API USJExperienceManager : public UEngineSubsystem
 {
 	GENERATED_BODY()
-	
+
+public:
+#if WITH_EDITOR
+	SJGAME_API void OnPlayInEditorBegun();
+
+	static void NotifyOfPluginActivation(const FString PluginURL);
+	static bool RequestToDeactivatePlugin(const FString PluginURL);
+#else
+	static void NotifyOfPluginActivation(const FString PluginURL) {}
+	static bool RequestToDeactivatePlugin(const FString PluginURL) { return true; }
+#endif
+
+private:
+	TMap<FString, int32> GameFeaturePluginRequestCountMap;
 };

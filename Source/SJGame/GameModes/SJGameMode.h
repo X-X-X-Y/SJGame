@@ -20,4 +20,5 @@ class SJGAME_API ASJGameMode : public AModularGameModeBase
 
 protected:
 	void HandleMatchAssignmentIfNotExpectingOne();
+	void OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId, const FString& ExperienceIdSource);
 };
