@@ -3,16 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ModularPawn.h"
-#include "SJPawn.generated.h"
+#include "EnhancedInputComponent.h"
+#include "SJInputComponent.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SJGAME_API ASJPawn : public AModularPawn
+class SJGAME_API USJInputComponent : public UEnhancedInputComponent
 {
 	GENERATED_BODY()
-
-
+	
 };

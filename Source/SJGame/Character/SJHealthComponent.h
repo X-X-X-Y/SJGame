@@ -3,16 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ModularPawn.h"
-#include "SJPawn.generated.h"
+#include "Components/GameFrameworkComponent.h"
+#include "SJHealthComponent.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SJGAME_API ASJPawn : public AModularPawn
+class SJGAME_API USJHealthComponent : public UGameFrameworkComponent
 {
 	GENERATED_BODY()
-
-
+	
 };

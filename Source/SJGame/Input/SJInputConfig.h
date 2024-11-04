@@ -3,16 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ModularPawn.h"
-#include "SJPawn.generated.h"
+#include "Engine/DataAsset.h"
+#include "SJInputConfig.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SJGAME_API ASJPawn : public AModularPawn
+class SJGAME_API USJInputConfig : public UDataAsset
 {
 	GENERATED_BODY()
-
-
+	
 };

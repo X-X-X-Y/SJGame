@@ -9,6 +9,11 @@
 #include "GameSystem/SJAssetManager.h"
 #include "GameSystem/SJLogChannels.h"
 #include "Kismet/GameplayStatics.h"
+#include "Player/SJPlayerState.h"
+#include "Character/SJPawnData.h"
+#include "Character/SJPawnExtensionComponent.h"
+
+#pragma region AGameModeBase Overried
 
 void ASJGameMode::InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage)
 {
@@ -18,6 +23,73 @@ void ASJGameMode::InitGame(const FString& MapName, const FString& Options, FStri
 	// 下一帧开始加载Experience
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::HandleMatchAssignmentIfNotExpectingOne);
 }
+
+UClass* ASJGameMode::GetDefaultPawnClassForController_Implementation(AController* InController)
+{
+	if (const USJPawnData* PawnData = GetPawnDataForController(InController))
+	{
+		if (PawnData->PawnClass)
+		{
+			return PawnData->PawnClass;
+		}
+	}
+	
+	return Super::GetDefaultPawnClassForController_Implementation(InController);
+}
+
+APawn* ASJGameMode::SpawnDefaultPawnAtTransform_Implementation(AController* NewPlayer, const FTransform& SpawnTransform)
+{
+	FActorSpawnParameters SpawnInfo;
+	SpawnInfo.Instigator = GetInstigator();
+	SpawnInfo.ObjectFlags |= RF_Transient;	// Never save the default player pawns into a map.
+	SpawnInfo.bDeferConstruction = true;
+
+	if (UClass* PawnClass = GetDefaultPawnClassForController(NewPlayer))
+	{
+		if (APawn* SpawnedPawn = GetWorld()->SpawnActor<APawn>(PawnClass, SpawnTransform, SpawnInfo))
+		{
+			if (USJPawnExtensionComponent* PawnExtComp = USJPawnExtensionComponent::FindPawnExtensionComponent(SpawnedPawn))
+			{
+				if (const USJPawnData* PawnData = GetPawnDataForController(NewPlayer))
+				{
+					PawnExtComp->SetPawnData(PawnData);
+				}
+				else
+				{
+					UE_LOG(LogSJ, Error, TEXT("Game mode was unable to set PawnData on the spawned pawn [%s]."), *GetNameSafe(SpawnedPawn));
+				}
+
+				SpawnedPawn->FinishSpawning(SpawnTransform);
+
+				return SpawnedPawn;
+			}
+		}
+		else
+		{
+			UE_LOG(LogSJ, Error, TEXT("Game mode was unable to spawn Pawn of class [%s] at [%s]."), *GetNameSafe(PawnClass), *SpawnTransform.ToHumanReadableString());
+		}
+	}
+	else
+	{
+		UE_LOG(LogSJ, Error, TEXT("Game mode was unable to spawn Pawn due to NULL pawn class."));
+	}
+	
+	return nullptr;
+}
+
+void ASJGameMode::InitGameState()
+{
+	Super::InitGameState();
+
+	// Listen for the experience load to complete	
+	USJExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<USJExperienceManagerComponent>();
+	check(ExperienceComponent);
+	ExperienceComponent->CallOrRegister_OnExperienceLoaded(FOnSJExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
+}
+
+#pragma endregion
+
+
 
 #pragma region Experience Methods
 
@@ -108,5 +180,61 @@ void ASJGameMode::OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId, const FSt
 	}
 }
 
+void ASJGameMode::OnExperienceLoaded(const USJExperienceDefinition* CurrentExperience)
+{
+	// Spawn any players that are already attached
+	//@TODO: Here we're handling only *player* controllers, but in GetDefaultPawnClassForController_Implementation we skipped all controllers
+	// GetDefaultPawnClassForController_Implementation might only be getting called for players anyways
+	// 这里再次重置玩家是因为Experience未加载完找不到Player,Experience加载完后再次重置
+	for (FConstPlayerControllerIterator Iterator = GetWorld()->GetPlayerControllerIterator(); Iterator; ++Iterator)
+	{
+		APlayerController* PC = Cast<APlayerController>(*Iterator);
+		if ((PC != nullptr) && (PC->GetPawn() == nullptr))
+		{
+			if (PlayerCanRestart(PC))
+			{
+				RestartPlayer(PC);
+			}
+		}
+	}
+}
+
 #pragma endregion
 
+#pragma region SJGameMode Public Feature
+
+const USJPawnData* ASJGameMode::GetPawnDataForController(const AController* InController) const
+{
+	// See if pawn data is already set on the player state
+	if (InController != nullptr)
+	{
+		if (const ASJPlayerState* SJGamePS = InController->GetPlayerState<ASJPlayerState>())
+		{
+			if (const USJPawnData* PawnData = SJGamePS->GetPawnData<USJPawnData>())
+			{
+				return PawnData;
+			}
+		}
+	}
+	
+	check(GameState);
+	USJExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<USJExperienceManagerComponent>();
+	check(ExperienceComponent);
+
+	if (ExperienceComponent->IsExperienceLoaded())
+	{
+		const USJExperienceDefinition* Experience = ExperienceComponent->GetCurrentExperienceChecked();
+		if (Experience->DefaultPawnData != nullptr)
+		{
+			return Experience->DefaultPawnData;
+		}
+		
+		// Experience is loaded and there's still no pawn data, fall back to the default for now
+		return USJAssetManager::Get().GetDefaultPawnData();
+	}
+
+	//数据未完成初始化,可能需要等待Experience完成加载
+	return nullptr;
+}
+
+#pragma endregion 

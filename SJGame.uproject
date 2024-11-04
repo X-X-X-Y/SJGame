@@ -12,7 +12,8 @@
 				"Engine",
 				"GameFeatures",
 				"ModularGameplay",
-				"ModularGameplayActors"
+				"ModularGameplayActors",
+				"EnhancedInput"
 			]
 		}
 	],

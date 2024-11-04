@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "SJExperienceDefinition.generated.h"
 
+class USJPawnData;
 class UGameFeatureAction;
 class USJExperienceActionSet;
 /**
@@ -22,6 +23,9 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
 	TArray<FString> GameFeaturesToEnable;
 
+	//@TODO: Make soft?
+	UPROPERTY(EditDefaultsOnly, Category = Gameplay)
+	TObjectPtr<const USJPawnData> DefaultPawnData;
 	
 	
 	// List of actions to perform as this experience is loaded/activated/deactivated/unloaded

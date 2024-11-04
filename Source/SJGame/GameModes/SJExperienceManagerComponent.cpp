@@ -283,5 +283,12 @@ bool USJExperienceManagerComponent::IsExperienceLoaded() const
 	return true;
 }
 
+const USJExperienceDefinition* USJExperienceManagerComponent::GetCurrentExperienceChecked() const
+{
+	check(LoadState == ESJExperienceLoadState::Loaded);
+	check(CurrentExperience != nullptr);
+	return CurrentExperience;
+}
+
 #pragma endregion
 

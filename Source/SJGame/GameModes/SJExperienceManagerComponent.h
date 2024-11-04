@@ -39,6 +39,10 @@ public:
 	// Returns true if the experience is fully loaded
 	bool IsExperienceLoaded() const;
 
+	// This returns the current experience if it is fully loaded, asserting otherwise
+	// (i.e., if you called it too soon)
+	const USJExperienceDefinition* GetCurrentExperienceChecked() const;
+
 private:
 	void StartExperienceLoad();
 	void OnExperienceLoadComplete();

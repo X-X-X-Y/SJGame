@@ -22,7 +22,8 @@ public class SJGame : ModuleRules
 			"InputCore",
 			"EnhancedInput",
 			"ModularGameplay",
-			"ModularGameplayActors"
+			"ModularGameplayActors",
+			"GameplayTags",
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]
