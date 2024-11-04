@@ -35,6 +35,10 @@
 		{
 			"Name": "GameFeatures",
 			"Enabled": true
+		},
+		{
+			"Name": "TowerDefenseCore",
+			"Enabled": true
 		}
 	]
 }
