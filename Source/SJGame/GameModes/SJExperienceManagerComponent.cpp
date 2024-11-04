@@ -53,9 +53,8 @@ void USJExperienceManagerComponent::StartExperienceLoad()
 {
 	check(CurrentExperience != nullptr);
 	check(LoadState == ESJExperienceLoadState::Unloaded);
-
-	//暂时移除联网模块
-	UE_LOG(LogSJExperience, Log, TEXT("EXPERIENCE: StartExperienceLoad(CurrentExperience = %s, %s)"),
+	
+	UE_LOG(LogSJExperience, Log, TEXT("EXPERIENCE: StartExperienceLoad(CurrentExperience = %s)"),
 	*CurrentExperience->GetPrimaryAssetId().ToString());
 	LoadState = ESJExperienceLoadState::Loading;
 	
@@ -253,9 +252,36 @@ void USJExperienceManagerComponent::OnExperienceFullLoadCompleted()
 
 	LoadState = ESJExperienceLoadState::Loaded;
 
-	
+	OnExperienceLoaded_HighPriority.Broadcast(CurrentExperience);
+	OnExperienceLoaded_HighPriority.Clear();
+
+	OnExperienceLoaded.Broadcast(CurrentExperience);
+	OnExperienceLoaded.Clear();
+
+	OnExperienceLoaded_LowPriority.Broadcast(CurrentExperience);
+	OnExperienceLoaded_LowPriority.Clear();
 }
 
+#pragma region Experience Event
 
+void USJExperienceManagerComponent::CallOrRegister_OnExperienceLoaded_HighPriority(
+	FOnSJExperienceLoaded::FDelegate&& Delegate)
+{
+}
 
+void USJExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(FOnSJExperienceLoaded::FDelegate&& Delegate)
+{
+}
+
+void USJExperienceManagerComponent::CallOrRegister_OnExperienceLoaded_LowPriority(
+	FOnSJExperienceLoaded::FDelegate&& Delegate)
+{
+}
+
+bool USJExperienceManagerComponent::IsExperienceLoaded() const
+{
+	return true;
+}
+
+#pragma endregion
 

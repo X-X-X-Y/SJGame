@@ -9,7 +9,7 @@
 
 class USJExperienceDefinition;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnLyraExperienceLoaded, const USJExperienceDefinition* /*Experience*/);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSJExperienceLoaded, const USJExperienceDefinition* /*Experience*/);
 
 enum class ESJExperienceLoadState
 {
@@ -29,7 +29,15 @@ class SJGAME_API USJExperienceManagerComponent : public UGameStateComponent
 
 public:
 	void SetCurrentExperience(FPrimaryAssetId ExperienceId);
+
+	// Ensures the delegate is called once the experience has been loaded,
+	// However, if the experience has already loaded, calls the delegate immediately.
+	void CallOrRegister_OnExperienceLoaded_HighPriority(FOnSJExperienceLoaded::FDelegate&& Delegate);
+	void CallOrRegister_OnExperienceLoaded(FOnSJExperienceLoaded::FDelegate&& Delegate);
+	void CallOrRegister_OnExperienceLoaded_LowPriority(FOnSJExperienceLoaded::FDelegate&& Delegate);
 	
+	// Returns true if the experience is fully loaded
+	bool IsExperienceLoaded() const;
 
 private:
 	void StartExperienceLoad();
@@ -47,11 +55,11 @@ private:
 	* Delegate called when the experience has finished loading just before others
 	* (e.g., subsystems that set up for regular gameplay)
 	*/
-	FOnLyraExperienceLoaded OnExperienceLoaded_HighPriority;
+	FOnSJExperienceLoaded OnExperienceLoaded_HighPriority;
 
 	/** Delegate called when the experience has finished loading */
-	FOnLyraExperienceLoaded OnExperienceLoaded;
+	FOnSJExperienceLoaded OnExperienceLoaded;
 
 	/** Delegate called when the experience has finished loading */
-	FOnLyraExperienceLoaded OnExperienceLoaded_LowPriority;
+	FOnSJExperienceLoaded OnExperienceLoaded_LowPriority;
 };

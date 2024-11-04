@@ -11,3 +11,4 @@ SJGAME_API DECLARE_LOG_CATEGORY_EXTERN(LogSJExperience, Log, All);
 SJGAME_API DECLARE_LOG_CATEGORY_EXTERN(LogSJAbilitySystem, Log, All);
 SJGAME_API DECLARE_LOG_CATEGORY_EXTERN(LogSJTeams, Log, All);
 
+SJGAME_API FString GetClientServerContextString(UObject* ContextObject = nullptr);

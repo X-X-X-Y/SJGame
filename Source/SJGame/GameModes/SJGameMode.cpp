@@ -86,8 +86,8 @@ void ASJGameMode::HandleMatchAssignmentIfNotExpectingOne()
 	if (!ExperienceId.IsValid())
 	{
 		//TODO: Pull this from a config setting or something
-		// ExperienceId = FPrimaryAssetId(FPrimaryAssetType("LyraExperienceDefinition"), FName("B_LyraDefaultExperience"));
-		// ExperienceIdSource = TEXT("Default");
+		ExperienceId = FPrimaryAssetId(FPrimaryAssetType("SJExperienceDefinition"), FName("B_SJDefaultExperience"));
+		ExperienceIdSource = TEXT("Default");
 	}
 	OnMatchAssignmentGiven(ExperienceId, ExperienceIdSource);
 }
@@ -100,7 +100,7 @@ void ASJGameMode::OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId, const FSt
 
 		USJExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<USJExperienceManagerComponent>();
 		check(ExperienceComponent);
-		// ExperienceComponent->SetCurrentExperience(ExperienceId);
+		ExperienceComponent->SetCurrentExperience(ExperienceId);
 	}
 	else
 	{

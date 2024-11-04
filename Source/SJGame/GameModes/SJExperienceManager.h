@@ -10,7 +10,7 @@
  * 
  */
 UCLASS()
-class SJGAME_API USJExperienceManager : public UEngineSubsystem
+class USJExperienceManager : public UEngineSubsystem
 {
 	GENERATED_BODY()
 
