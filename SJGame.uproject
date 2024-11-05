@@ -14,7 +14,8 @@
 				"ModularGameplay",
 				"ModularGameplayActors",
 				"EnhancedInput",
-				"GameplayAbilities"
+				"GameplayAbilities",
+				"CommonGame"
 			]
 		}
 	],
@@ -40,6 +41,14 @@
 		},
 		{
 			"Name": "TowerDefenseCore",
+			"Enabled": true
+		},
+		{
+			"Name": "CommonUser",
+			"Enabled": true
+		},
+		{
+			"Name": "CommonGame",
 			"Enabled": true
 		}
 	]
