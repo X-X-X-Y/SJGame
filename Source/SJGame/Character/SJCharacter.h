@@ -6,6 +6,7 @@
 #include "ModularCharacter.h"
 #include "SJCharacter.generated.h"
 
+class USJCameraComponent;
 class USJPawnExtensionComponent;
 /**
  * 
@@ -19,7 +20,14 @@ public:
 
 	ASJCharacter(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
+protected:
+
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SJGame|Character", Meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USJPawnExtensionComponent> PawnExtComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SJGame|Character", Meta = (AllowPrivateAccess = "true"))
+	TObjectPtr<USJCameraComponent> CameraComponent;
 };

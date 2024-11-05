@@ -47,3 +47,7 @@ void USJPawnExtensionComponent::SetPawnData(const USJPawnData* InPawnData)
 	Pawn->ForceNetUpdate();
 	CheckDefaultInitialization();
 }
+
+void USJPawnExtensionComponent::SetupPlayerInputComponent()
+{
+}

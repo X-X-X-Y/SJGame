@@ -28,6 +28,8 @@ public:
 	
 	/** Sets the current pawn data */
 	void SetPawnData(const USJPawnData* InPawnData);
+
+	void SetupPlayerInputComponent();
 	
 protected:
 	/** Pawn data used to create the pawn. Specified from a spawn function or on a placed instance. */
