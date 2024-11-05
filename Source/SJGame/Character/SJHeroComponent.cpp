@@ -10,6 +10,8 @@
 #include "Player/SJPlayerController.h"
 #include "Player/SJPlayerState.h"
 
+const FName USJHeroComponent::NAME_ActorFeatureName("Hero");
+
 #pragma region IGameFrameworkInitStateInterface interface
 
 bool USJHeroComponent::CanChangeInitState(UGameFrameworkComponentManager* Manager, FGameplayTag CurrentState,

@@ -21,6 +21,7 @@ public:
 	static const FName NAME_ActorFeatureName;
 
 	//~ Begin IGameFrameworkInitStateInterface interface
+	virtual FName GetFeatureName() const override { return NAME_ActorFeatureName; }
 	virtual void CheckDefaultInitialization() override;
 	//~ End IGameFrameworkInitStateInterface interface
 	

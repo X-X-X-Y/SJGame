@@ -2,9 +2,9 @@
 
 
 #include "Character/SJPawnExtensionComponent.h"
-
 #include "GameSystem/SJGameplayTags.h"
-#include "GameSystem/SJLogChannels.h"
+
+const FName USJPawnExtensionComponent::NAME_ActorFeatureName("PawnExtension");
 
 #pragma region IGameFrameworkInitStateInterface interface
 
