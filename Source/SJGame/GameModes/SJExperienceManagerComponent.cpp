@@ -267,20 +267,44 @@ void USJExperienceManagerComponent::OnExperienceFullLoadCompleted()
 void USJExperienceManagerComponent::CallOrRegister_OnExperienceLoaded_HighPriority(
 	FOnSJExperienceLoaded::FDelegate&& Delegate)
 {
+	if (IsExperienceLoaded())
+	{
+		Delegate.Execute(CurrentExperience);
+	}
+	else
+	{
+		OnExperienceLoaded_HighPriority.Add(MoveTemp(Delegate));
+	}
 }
 
 void USJExperienceManagerComponent::CallOrRegister_OnExperienceLoaded(FOnSJExperienceLoaded::FDelegate&& Delegate)
 {
+	if (IsExperienceLoaded())
+	{
+		Delegate.Execute(CurrentExperience);
+	}
+	else
+	{
+		OnExperienceLoaded.Add(MoveTemp(Delegate));
+	}
 }
 
 void USJExperienceManagerComponent::CallOrRegister_OnExperienceLoaded_LowPriority(
 	FOnSJExperienceLoaded::FDelegate&& Delegate)
 {
+	if (IsExperienceLoaded())
+	{
+		Delegate.Execute(CurrentExperience);
+	}
+	else
+	{
+		OnExperienceLoaded_LowPriority.Add(MoveTemp(Delegate));
+	}
 }
 
 bool USJExperienceManagerComponent::IsExperienceLoaded() const
 {
-	return true;
+	return (LoadState == ESJExperienceLoadState::Loaded) && (CurrentExperience != nullptr);
 }
 
 const USJExperienceDefinition* USJExperienceManagerComponent::GetCurrentExperienceChecked() const

@@ -224,7 +224,7 @@ const USJPawnData* ASJGameMode::GetPawnDataForController(const AController* InCo
 	if (ExperienceComponent->IsExperienceLoaded())
 	{
 		const USJExperienceDefinition* Experience = ExperienceComponent->GetCurrentExperienceChecked();
-		if (Experience->DefaultPawnData != nullptr)
+		if (Experience && Experience->DefaultPawnData != nullptr)
 		{
 			return Experience->DefaultPawnData;
 		}
