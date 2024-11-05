@@ -12,6 +12,7 @@
 #include "Player/SJPlayerState.h"
 #include "SJPawnData.h"
 
+const FName USJHeroComponent::NAME_BindInputsNow("BindInputsNow");
 const FName USJHeroComponent::NAME_ActorFeatureName("Hero");
 
 #pragma region IGameFrameworkInitStateInterface interface

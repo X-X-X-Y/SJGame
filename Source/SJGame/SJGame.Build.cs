@@ -34,7 +34,9 @@ public class SJGame : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(new string[]
 		{
-			"DeveloperSettings"
+			"DeveloperSettings",
+			"CommonGame",
+			"CommonUser"
 		});
 
 		// Uncomment if you are using Slate UI

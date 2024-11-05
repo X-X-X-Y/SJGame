@@ -28,6 +28,10 @@ public:
 	virtual void CheckDefaultInitialization() override;
 	//~ End IGameFrameworkInitStateInterface interface
 
+public:
+	/** The name of the extension event sent via UGameFrameworkComponentManager when ability inputs are ready to bind */
+	static const FName NAME_BindInputsNow;
+
 protected:
 	virtual void InitializePlayerInput(UInputComponent* PlayerInputComponent);
 
