@@ -30,4 +30,9 @@ public:
 
 protected:
 	virtual void InitializePlayerInput(UInputComponent* PlayerInputComponent);
+
+protected:
+	
+	// UPROPERTY(EditAnywhere)
+	// // TArray<FInputMappingContextAndPriority> DefaultInputMappings;
 };

@@ -6,6 +6,7 @@
 #include "Engine/DataAsset.h"
 #include "SJPawnData.generated.h"
 
+class USJInputConfig;
 /**
  * 
  */
@@ -18,4 +19,8 @@ public:
 	// Class to instantiate for this pawn (should usually derive from ALyraPawn or ALyraCharacter).
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SJGame|Pawn")
 	TSubclassOf<APawn> PawnClass;
+
+	// Input configuration used by player controlled pawns to create input mappings and bind input actions.
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|Input")
+	TObjectPtr<USJInputConfig> InputConfig;
 };

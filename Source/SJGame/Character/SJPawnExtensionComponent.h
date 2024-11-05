@@ -28,6 +28,10 @@ public:
 	/** Returns the pawn extension component if one exists on the specified actor. */
 	UFUNCTION(BlueprintPure, Category = "SJGame|Pawn")
 	static USJPawnExtensionComponent* FindPawnExtensionComponent(const AActor* Actor) { return (Actor ? Actor->FindComponentByClass<USJPawnExtensionComponent>() : nullptr); }
+
+	/** Gets the pawn data, which is used to specify pawn properties in data */
+	template <class T>
+	const T* GetPawnData() const { return Cast<T>(PawnData); }
 	
 	/** Sets the current pawn data */
 	void SetPawnData(const USJPawnData* InPawnData);

@@ -7,8 +7,10 @@
 #include "SJPawnExtensionComponent.h"
 #include "Components/GameFrameworkComponentManager.h"
 #include "GameSystem/SJGameplayTags.h"
+#include "Player/SJLocalPlayer.h"
 #include "Player/SJPlayerController.h"
 #include "Player/SJPlayerState.h"
+#include "SJPawnData.h"
 
 const FName USJHeroComponent::NAME_ActorFeatureName("Hero");
 
@@ -139,11 +141,23 @@ void USJHeroComponent::InitializePlayerInput(UInputComponent* PlayerInputCompone
 	const APlayerController* PC = GetController<APlayerController>();
 	check(PC);
 
-	// const ULyraLocalPlayer* LP = Cast<ULyraLocalPlayer>(PC->GetLocalPlayer());
-	// check(LP);
+	const USJLocalPlayer* LP = Cast<USJLocalPlayer>(PC->GetLocalPlayer());
+	check(LP);
 
-	// UEnhancedInputLocalPlayerSubsystem* Subsystem = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
-	// check(Subsystem);
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = LP->GetSubsystem<UEnhancedInputLocalPlayerSubsystem>();
+	check(Subsystem);
+
+	Subsystem->ClearAllMappings();
+	if (const USJPawnExtensionComponent* PawnExtComp = USJPawnExtensionComponent::FindPawnExtensionComponent(Pawn))
+	{
+		if (const USJPawnData* PawnData = PawnExtComp->GetPawnData<USJPawnData>())
+		{
+			if (const USJInputConfig* InputConfig = PawnData->InputConfig)
+			{
+				
+			}
+		}
+	}
 }
 
 #pragma endregion
