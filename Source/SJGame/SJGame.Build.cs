@@ -18,12 +18,18 @@ public class SJGame : ModuleRules
 		{
 			"Core",
 			"CoreUObject",
+			"ApplicationCore",
 			"Engine",
 			"InputCore",
 			"EnhancedInput",
 			"ModularGameplay",
 			"ModularGameplayActors",
 			"GameplayTags",
+			"GameplayAbilities",
+			"GameplayTasks",
+			"GameFeatures",
+			"ModularGameplay",
+			"ModularGameplayActors"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]

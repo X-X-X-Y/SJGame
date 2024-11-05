@@ -3,15 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "ModularPlayerController.h"
-#include "SJPlayerControl.generated.h"
+#include "Character/SJCharacter.h"
+#include "SJHeroCharacter.generated.h"
+
 
 /**
  * 
  */
 UCLASS()
-class SJGAME_API ASJPlayerControl : public AModularPlayerController
+class SJGAME_API ASJHeroCharacter : public ASJCharacter
 {
 	GENERATED_BODY()
-	
+
+public:
+
 };

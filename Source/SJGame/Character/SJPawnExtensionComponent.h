@@ -17,6 +17,8 @@ class SJGAME_API USJPawnExtensionComponent : public UPawnComponent, public IGame
 	GENERATED_BODY()
 
 public:
+	/** The name of this overall feature, this one depends on the other named component features */
+	static const FName NAME_ActorFeatureName;
 
 	//~ Begin IGameFrameworkInitStateInterface interface
 	virtual void CheckDefaultInitialization() override;

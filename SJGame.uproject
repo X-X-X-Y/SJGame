@@ -13,7 +13,8 @@
 				"GameFeatures",
 				"ModularGameplay",
 				"ModularGameplayActors",
-				"EnhancedInput"
+				"EnhancedInput",
+				"GameplayAbilities"
 			]
 		}
 	],

@@ -50,4 +50,5 @@ void USJPawnExtensionComponent::SetPawnData(const USJPawnData* InPawnData)
 
 void USJPawnExtensionComponent::SetupPlayerInputComponent()
 {
+	CheckDefaultInitialization();
 }
