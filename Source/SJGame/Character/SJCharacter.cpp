@@ -24,7 +24,7 @@ void ASJCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	
-	// PawnExtComponent->SetupPlayerInputComponent();
+	PawnExtComponent->SetupPlayerInputComponent();
 }
 
 #pragma endregion

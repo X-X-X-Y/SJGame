@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CommonPlayerController.h"
 #include "ModularPlayerController.h"
 #include "SJPlayerController.generated.h"
 
@@ -10,7 +11,7 @@
  * 
  */
 UCLASS()
-class SJGAME_API ASJPlayerController : public AModularPlayerController
+class SJGAME_API ASJPlayerController : public ACommonPlayerController
 {
 	GENERATED_BODY()
 	

@@ -34,6 +34,14 @@ class SJGAME_API USJInputConfig : public UDataAsset
 	GENERATED_BODY()
 
 public:
+
+	UFUNCTION(BlueprintCallable, Category = "SJGame|Pawn")
+	const UInputAction* FindNativeInputActionForTag(FGameplayTag InputTag, bool bLogIfNotFound) const;
+
+	UFUNCTION(BlueprintCallable, Category = "SJGame|Pawn")
+	const UInputAction* FindAbilityInputActionForTag(const FGameplayTag& InputTag, bool bLogIfNotFound = true) const;
+	
+public:
 	// List of input actions used by the owner.  These input actions are mapped to a gameplay tag and must be manually bound.
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Meta = (TitleProperty = "InputAction"))
 	TArray<FSJInputAction> NativeInputActions;
@@ -41,4 +49,5 @@ public:
 	// List of input actions used by the owner.  These input actions are mapped to a gameplay tag and are automatically bound to abilities with matching input tags.
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Meta = (TitleProperty = "InputAction"))
 	TArray<FSJInputAction> AbilityInputActions;
+
 };
