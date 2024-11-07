@@ -24,6 +24,16 @@ void ASJGameMode::InitGame(const FString& MapName, const FString& Options, FStri
 	GetWorld()->GetTimerManager().SetTimerForNextTick(this, &ThisClass::HandleMatchAssignmentIfNotExpectingOne);
 }
 
+void ASJGameMode::InitGameState()
+{
+	Super::InitGameState();
+
+	// Listen for the experience load to complete	
+	USJExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<USJExperienceManagerComponent>();
+	check(ExperienceComponent);
+	ExperienceComponent->CallOrRegister_OnExperienceLoaded(FOnSJExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
+}
+
 UClass* ASJGameMode::GetDefaultPawnClassForController_Implementation(AController* InController)
 {
 	if (const USJPawnData* PawnData = GetPawnDataForController(InController))
@@ -77,18 +87,16 @@ APawn* ASJGameMode::SpawnDefaultPawnAtTransform_Implementation(AController* NewP
 	return nullptr;
 }
 
-void ASJGameMode::InitGameState()
+void ASJGameMode::HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer)
 {
-	Super::InitGameState();
-
-	// Listen for the experience load to complete	
-	USJExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<USJExperienceManagerComponent>();
-	check(ExperienceComponent);
-	ExperienceComponent->CallOrRegister_OnExperienceLoaded(FOnSJExperienceLoaded::FDelegate::CreateUObject(this, &ThisClass::OnExperienceLoaded));
+	//判断设置新玩家时Experience是否加载中
+	if (IsExperienceLoaded())
+	{
+		Super::HandleStartingNewPlayer_Implementation(NewPlayer);
+	}
 }
 
 #pragma endregion
-
 
 
 #pragma region Experience Methods
@@ -235,6 +243,15 @@ const USJPawnData* ASJGameMode::GetPawnDataForController(const AController* InCo
 
 	//数据未完成初始化,可能需要等待Experience完成加载
 	return nullptr;
+}
+
+bool ASJGameMode::IsExperienceLoaded() const
+{
+	check(GameState);
+	USJExperienceManagerComponent* ExperienceComponent = GameState->FindComponentByClass<USJExperienceManagerComponent>();
+	check(ExperienceComponent);
+
+	return ExperienceComponent->IsExperienceLoaded();
 }
 
 #pragma endregion 

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ModularPlayerState.h"
+#include "GameModes/SJExperienceDefinition.h"
 #include "SJPlayerState.generated.h"
 
 class USJPawnData;
@@ -19,6 +20,17 @@ public:
 	template <class T>
 	const T* GetPawnData() const { return Cast<T>(PawnData); }
 
+	void SetPawnData(const USJPawnData* USJPawnData);
+
+	//~AActor interface
+	virtual void PreInitializeComponents() override;
+	virtual void PostInitializeComponents() override;
+	//~End of AActor interface
+
+private:
+
+	void OnExperienceLoaded(const USJExperienceDefinition* USJExperienceDefinition);
+	
 protected:
 	
 	//TODO:UPROPERTY(ReplicatedUsing = OnRep_PawnData)

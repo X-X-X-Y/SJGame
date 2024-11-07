@@ -21,6 +21,6 @@ public:
 	TSubclassOf<APawn> PawnClass;
 
 	// Input configuration used by player controlled pawns to create input mappings and bind input actions.
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Lyra|Input")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SJGame|Input")
 	TObjectPtr<USJInputConfig> InputConfig;
 };

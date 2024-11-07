@@ -22,13 +22,15 @@ public:
 	
 	//~AGameModeBase interface
 	virtual void InitGame(const FString& MapName, const FString& Options, FString& ErrorMessage) override;
+	virtual void InitGameState() override;
 	virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
 	virtual APawn* SpawnDefaultPawnAtTransform_Implementation(AController* NewPlayer, const FTransform& SpawnTransform) override;
-	virtual void InitGameState() override;
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* NewPlayer) override;
 	//~End of AGameModeBase interface
 
 protected:
 	void HandleMatchAssignmentIfNotExpectingOne();
+	bool IsExperienceLoaded() const;
 	void OnMatchAssignmentGiven(FPrimaryAssetId ExperienceId, const FString& ExperienceIdSource);
 	void OnExperienceLoaded(const USJExperienceDefinition* CurrentExperience);
 };
